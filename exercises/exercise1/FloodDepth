@@ -1,0 +1,31 @@
+//the deepest point in the lake is the difference between the minimum of the highest block from the 
+//left and from the right, minus the height at the current block
+
+function solution(A) {
+  // Implement your solution here
+  let highestLeft = [];
+  let highestRight = [];
+  let highestl = 0;
+  let highestr = 0;
+  // finding the highest block iterated of from the left cumulatively.
+  for (let i = 0; i < A.length; i++) {
+    if (A[i] > highestl) {
+      highestl = A[i];
+    }
+    highestLeft[i] = highestl;
+  }
+  for (let j = A.length - 1; j >= 0; j--) {
+    // fingind the highest block iterated of from the tight cumulatively.
+    if (A[j] > highestr) {
+      highestr = A[j];
+    }
+    highestRight[j] = highestr;
+  }
+
+  let deepest = [];
+  for (k = 0; k < A.length; k++) {
+    let difference = Math.min(highestLeft[k], highestRight[k]) - A[k];
+    deepest[k] = difference;
+  }
+  return Math.max(...deepest);
+}
