@@ -1,0 +1,29 @@
+// the two changing in direction can be modeled by extending the slop twice,
+// once with a mirrored slop, and another with a double mirrored slop.
+function lengthOfLIS(nums) {
+    const temp = new Array(nums.length).fill(0);
+    let idx = 0;
+    for (let i = 0; i < nums.length; i++) {
+        let fnd = temp.findIndex((val) => val >= nums[i]);
+        if (fnd < 0) {
+            fnd = idx;
+            idx++;
+        }
+        temp[fnd] = nums[i];
+    }
+    return idx;
+}
+
+function solution(A) {
+    const bound = Math.max(...A);
+    const withMirrors = new Array(A.length * 3).fill(0);
+  console.log(withMirrors)
+    for (let i = 0; i < A.length; i++) {
+        withMirrors[i*3] = bound * 2 + A[i] + 1;
+        withMirrors[i*3+1] = bound * 2 - A[i] + 1;
+        withMirrors[i*3+2] = A[i];
+    }
+    return lengthOfLIS(withMirrors);
+}
+
+
